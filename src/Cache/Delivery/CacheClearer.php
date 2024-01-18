@@ -34,7 +34,7 @@ class CacheClearer implements CacheClearerInterface
     /**
      * {@inheritdoc}
      */
-    public function clear($cacheDir)
+    public function clear(string $cacheDir): void
     {
         $this->clearer->clear();
     }

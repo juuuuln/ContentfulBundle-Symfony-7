@@ -23,6 +23,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
 
 class DebugCommand extends Command
 {
@@ -34,10 +35,10 @@ class DebugCommand extends Command
     /**
      * DebugCommand constructor.
      *
-     * @param Client[] $clients        This is actually a Generator, but it behaves as an array of Client objects
-     * @param array    $configurations
+     * @param RewindableGenerator $clients This is actually a Generator, but it behaves as an array of Client objects
+     * @param array|null $configurations
      */
-    public function __construct($clients, $configurations = [])
+    public function __construct(?RewindableGenerator $clients, ?array $configurations = [])
     {
         parent::__construct();
 
@@ -125,11 +126,11 @@ class DebugCommand extends Command
         ));
         $data = \array_map(function (ContentType $contentType) use ($entries) {
             return [
-               $contentType->getId(),
-               $contentType->getName(),
-               \count($contentType->getFields()),
-               $entries[$contentType->getId()],
-               $contentType->getDescription(),
+                $contentType->getId(),
+                $contentType->getName(),
+                \count($contentType->getFields()),
+                $entries[$contentType->getId()],
+                $contentType->getDescription(),
             ];
         }, $contentTypes->getItems());
         $io->table(

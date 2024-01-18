@@ -46,7 +46,7 @@ class CacheWarmer implements CacheWarmerInterface
     /**
      * {@inheritdoc}
      */
-    public function warmUp($cacheDir): array
+    public function warmUp(string $cacheDir, ?string $buildDir = null): array
     {
         $this->warmer->warmUp($this->cacheContent);
         // we don't have any directories to pre-load, so we can simply return an empty array.

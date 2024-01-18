@@ -33,7 +33,7 @@ class ContentfulExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configs = $this->processConfiguration(
             new Configuration($container->getParameter('kernel.debug')),
@@ -108,7 +108,7 @@ class ContentfulExtension extends Extension
         return $this;
     }
 
-    private function registerDeliveryClient(ContainerBuilder $container, array $configs)
+    private function registerDeliveryClient(ContainerBuilder $container, array $configs): void
     {
         if (!$configs) {
             $container->setParameter('contentful.delivery.clients.info', []);
@@ -189,7 +189,7 @@ class ContentfulExtension extends Extension
         return $options;
     }
 
-    private function configureDeliveryCache(ContainerBuilder $container, string $name, array $cache)
+    private function configureDeliveryCache(ContainerBuilder $container, string $name, array $cache): void
     {
         if (null === $cache['pool']) {
             return;

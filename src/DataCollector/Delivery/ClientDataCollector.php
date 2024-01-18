@@ -16,6 +16,7 @@ use Contentful\Delivery\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
 
 class ClientDataCollector extends DataCollector
 {
@@ -25,10 +26,10 @@ class ClientDataCollector extends DataCollector
     private $clients = [];
 
     /**
-     * @param Client[] $clients        This is actually a Generator, but it behaves as an array of Client objects
-     * @param array    $configurations
+     * @param RewindableGenerator $clients This is actually a Generator, but it behaves as an array of Client objects
+     * @param array|null $configurations
      */
-    public function __construct($clients = [], $configurations = [])
+    public function __construct(?RewindableGenerator $clients, ?array $configurations = [])
     {
         $this->reset();
 
@@ -49,7 +50,7 @@ class ClientDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, $exception = null)
+    public function collect(Request $request, Response $response, $exception = null): void
     {
         $messages = [];
         foreach ($this->clients as $client) {
@@ -99,7 +100,7 @@ class ClientDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [
             'messages' => [],

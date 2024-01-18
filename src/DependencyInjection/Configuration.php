@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
      */
     private $builder;
 
-    public function __construct($debug)
+    public function __construct(bool $debug)
     {
         $this->debug = (bool) $debug;
         $this->builder = new NodeBuilder();
@@ -73,7 +73,7 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('default')
             ->info('Which client to configure as default for autowiring')
             ->defaultFalse()
-        ;
+            ;
     }
 
     private function createTokenNode(): NodeDefinition
@@ -83,7 +83,7 @@ class Configuration implements ConfigurationInterface
             ->info('The Contentful access token for the given space')
             ->isRequired()
             ->cannotBeEmpty()
-        ;
+            ;
     }
 
     private function createSpaceNode(): NodeDefinition
@@ -93,7 +93,7 @@ class Configuration implements ConfigurationInterface
             ->info('The space ID')
             ->isRequired()
             ->cannotBeEmpty()
-        ;
+            ;
     }
 
     private function createEnvironmentNode(): NodeDefinition
@@ -103,7 +103,7 @@ class Configuration implements ConfigurationInterface
             ->info('The environment ID')
             ->defaultValue('master')
             ->cannotBeEmpty()
-        ;
+            ;
     }
 
     private function createApiNode(): NodeDefinition
@@ -114,7 +114,7 @@ class Configuration implements ConfigurationInterface
             ->defaultValue('delivery')
             ->cannotBeEmpty()
             ->values(['delivery', 'preview'])
-        ;
+            ;
     }
 
     private function createOptionsNode(): NodeDefinition
@@ -129,7 +129,7 @@ class Configuration implements ConfigurationInterface
             ->append($this->createClientNode())
             ->append($this->createCacheNode())
             ->end()
-        ;
+            ;
     }
 
     private function createLocaleNode(): NodeDefinition
@@ -139,7 +139,7 @@ class Configuration implements ConfigurationInterface
             ->info('If set, it will be used as the locale on all API calls')
             ->defaultNull()
             ->cannotBeEmpty()
-        ;
+            ;
     }
 
     private function createHostNode(): NodeDefinition
@@ -155,7 +155,7 @@ class Configuration implements ConfigurationInterface
             })
             ->thenInvalid('Parameter "host" in client configuration must be a valid URL.')
             ->end()
-        ;
+            ;
     }
 
     private function createLoggerNode(): NodeDefinition
@@ -164,7 +164,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('logger')
             ->info('A PSR-3 logger implementation, will default to the system logger')
             ->defaultValue(LoggerInterface::class)
-        ;
+            ;
     }
 
     private function createClientNode(): NodeDefinition
@@ -174,7 +174,7 @@ class Configuration implements ConfigurationInterface
             ->info('A Guzzle client instance')
             ->defaultNull()
             ->cannotBeEmpty()
-        ;
+            ;
     }
 
     private function createCacheNode(): NodeDefinition
@@ -182,7 +182,7 @@ class Configuration implements ConfigurationInterface
         // PHPStan does not know this is guaranteed to return a NodeBuilder on line 192.
         // Therefore, we need to ignore this.
         return $this->builder /* @phpstan-ignore-line */
-            ->arrayNode('cache')
+        ->arrayNode('cache')
             ->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('pool')
@@ -198,7 +198,7 @@ class Configuration implements ConfigurationInterface
             ->defaultFalse()
             ->end()
             ->end()
-        ;
+            ;
     }
 
     public function isDebug(): bool
