@@ -6,8 +6,26 @@
 [![Packagist](https://img.shields.io/github/license/contentful/ContentfulBundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
 
 > Symfony Bundle for the Contentful Delivery SDK. This bundle requires PHP 7.2 or higher or PHP 8.0 or higher, and Symfony 3.4 or higher. It also requires Twig to be installed.
+# Disclaimer
 
+This fork works for me on Symfony 7(.0.2), PHP 8.2, but it may not work for you. Test before using in an active environment.
 # Setup
+
+Before adding the package via composer, ensure that you add the following to composer.json:
+
+``` json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/juuuuln/contentful.php"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/juuuuln/ContentfulBundle-Symfony-7"
+        }
+    ],
+```
+This will allow composer to download the forks, rather than the original packages.
 
 Add this package to your application by using [Composer](https://getcomposer.org/) and executing the following command:
 
